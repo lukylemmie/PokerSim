@@ -24,7 +24,10 @@ public class Player {
     private ArrayList<Card> bestFlush = new ArrayList<>();
     private Card quadruple = null;
     private Card triple = null;
+    private ArrayList<Card> bestTriple = new ArrayList<>();
+    private Card twoTriple = null;
     private Card pair = null;
+    private ArrayList<Card> bestPair = new ArrayList<>();
     private Card twoPair = null;
 
     private int score = -1;
@@ -80,52 +83,101 @@ public class Player {
             }
         }
 
-        // check for flush
-        playerHasFlush();
-        if (!bestFlush.isEmpty()){
-            if (score < SCORE_FLUSH){
-                score = SCORE_FLUSH;
-                bestHand = bestFlush;
-            }
-        }
-
-        // check for straight
-        playerHasStraight();
-        if (!bestStraight.isEmpty()){
-            if (score < SCORE_STRAIGHT){
-                score = SCORE_STRAIGHT;
-                bestHand = bestStraight;
-            }
-        }
 
         // check for straight flush
-        if (!bestStraight.isEmpty() && !bestFlush.isEmpty()){
-            ArrayList<Card> cards = hasStraight(suiteStats[bestFlush.get(0).getSuite()]);
-            if (!cards.isEmpty() && score < SCORE_STRAIGHT_FLUSH){
-                score = SCORE_STRAIGHT_FLUSH;
-                bestHand = cards;
+        if (score < SCORE_STRAIGHT_FLUSH) {
+
+            // check for flush
+            playerHasFlush();
+            if (!bestFlush.isEmpty()) {
+                if (score < SCORE_FLUSH) {
+                    score = SCORE_FLUSH;
+                    bestHand = bestFlush;
+                }
             }
+
+            // check for straight
+            playerHasStraight();
+            if (!bestStraight.isEmpty()) {
+                if (score < SCORE_STRAIGHT) {
+                    score = SCORE_STRAIGHT;
+                    bestHand = bestStraight;
+                }
+            }
+
+            if (!bestStraight.isEmpty() && !bestFlush.isEmpty()) {
+                ArrayList<Card> cards = hasStraight(suiteStats[bestFlush.get(0).getSuite()]);
+                if (!cards.isEmpty()) {
+                    score = SCORE_STRAIGHT_FLUSH;
+                    bestHand = cards;
+                }
+            }
+
         }
 
-        // check for 4 of a kind
+
         for (int i = 0; i < Card.MAX_NUMBER + 1; i++) {
-            if (numberStats[i].size() == 4){
-                quadruple = numberStats[i].get(0);
-                if (score < SCORE_4_OF_A_KIND){
+            // check for 4 of a kind
+            if (score < SCORE_4_OF_A_KIND){
+                if (numberStats[i].size() == 4){
+                    quadruple = numberStats[i].get(0);
                     score = SCORE_4_OF_A_KIND;
                     bestHand.clear();
                     bestHand.addAll(numberStats[i]);
                     Boolean kickerAdded = false;
                     int j = Card.MAX_NUMBER;
-                    while (!kickerAdded){
+                    while (j > -1 && !kickerAdded){
                         if (j != i && !numberStats[j].isEmpty()){
                             kickerAdded = true;
                             bestHand.add(numberStats[j].get(0));
                         }
+                        j--;
                     }
                 }
             }
+
+            if (score < SCORE_FULL_HOUSE) {
+                // check for 3 of a kind
+                if (numberStats[i].size() == 3){
+                    if (triple != null){
+                        twoTriple = triple;
+                    }
+                    triple = numberStats[i].get(0);
+                    if (score < SCORE_3_OF_A_KIND){
+                        score = SCORE_3_OF_A_KIND;
+                        int kickerCount = 0;
+                        bestHand.clear();
+                        bestHand.addAll(numberStats[i]);
+                        int j = Card.MAX_NUMBER;
+                        while(j > -1 && kickerCount < 2){
+                            if (j != i && !numberStats[j].isEmpty()){
+                                kickerCount++;
+                                bestHand.add(numberStats[j].get(0));
+                            }
+                            j--;
+                        }
+                    }
+                }
+
+                // check for pair and two pair
+                if (numberStats[i].size() == 2){
+                    if (pair != null){
+                        twoPair = pair;
+                        // TODO: bestHand handling
+                    }
+                    pair = numberStats[i].get(0);
+                }
+            }
         }
+
+        // check for full house
+        if (score < SCORE_FULL_HOUSE) {
+
+        }
+
+
+
+
 
         return score;
     }
