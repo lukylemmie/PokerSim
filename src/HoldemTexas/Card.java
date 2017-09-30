@@ -50,6 +50,26 @@ public class Card {
         this.inHand = inHand;
     }
 
+    // negative if this < card
+    // 0 if same
+    // positive if this > card
+    public static int compare(Card card1, Card card2){
+        Integer isLarger = card1.getNumber() - card2.getNumber();
+        if(isLarger != 0 && card2.getNumber() == 0){
+            isLarger = -1;
+        } else if(isLarger != 0 && card1.getNumber() == 0){
+            isLarger = 1;
+        }
+
+        if (isLarger == 0 && card2.isInHand()){
+            isLarger = -1;
+        } else if (isLarger == 0 && card1.isInHand()){
+            isLarger = 1;
+        }
+
+        return isLarger;
+    }
+
     /*
     returns negative if this < card
     returns 0 if this == card
@@ -58,10 +78,16 @@ public class Card {
     static class CardComparatorAscending implements Comparator<Card>{
         public int compare(Card card1, Card card2){
             int isLarger = card1.getNumber() - card2.getNumber();
-            if(isLarger != 0 && card1.getNumber() == 0){
-                isLarger = 1;
-            } else if(isLarger != 0 && card2.getNumber() == 0){
+            if(isLarger != 0 && card2.getNumber() == 0){
                 isLarger = -1;
+            } else if(isLarger != 0 && card1.getNumber() == 0){
+                isLarger = 1;
+            }
+
+            if (isLarger == 0 && card2.isInHand()){
+                isLarger = -1;
+            } else if (isLarger == 0 && card1.isInHand()){
+                isLarger = 1;
             }
 
             return isLarger;
@@ -79,6 +105,12 @@ public class Card {
             if(isLarger != 0 && card2.getNumber() == 0){
                 isLarger = 1;
             } else if(isLarger != 0 && card1.getNumber() == 0){
+                isLarger = -1;
+            }
+
+            if (isLarger == 0 && card2.isInHand()){
+                isLarger = 1;
+            } else if (isLarger == 0 && card1.isInHand()){
                 isLarger = -1;
             }
 

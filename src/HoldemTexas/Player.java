@@ -14,7 +14,6 @@ public class Player {
 
     private ArrayList<Card> hand = new ArrayList<>();
     private ArrayList<Card> bestHand = new ArrayList<>();
-    private Card highestNumberOfHand;
 
     private ArrayList<Card>[] suiteStats = new ArrayList[Card.MAX_SUITE];
     private ArrayList<Card>[] numberStats = new ArrayList[Card.MAX_NUMBER + 1];
@@ -24,10 +23,8 @@ public class Player {
     private ArrayList<Card> bestFlush = new ArrayList<>();
     private Card quadruple = null;
     private Card triple = null;
-    private ArrayList<Card> bestTriple = new ArrayList<>();
     private Card twoTriple = null;
     private Card pair = null;
-    private ArrayList<Card> bestPair = new ArrayList<>();
     private Card twoPair = null;
 
     private int score = -1;
@@ -71,11 +68,13 @@ public class Player {
         hand.addAll(cards);
     }
 
-    public int calculateScore(ArrayList<Card> table){
-        hand.addAll(table);
-        Collections.sort(hand, new Card.CardComparatorDescending());
+    public int calculateScoreAndBestHand(ArrayList<Card> table){
+        ArrayList<Card> cardPool = new ArrayList<>();
+        cardPool.addAll(table);
+        cardPool.addAll(hand);
+        Collections.sort(cardPool, new Card.CardComparatorDescending());
 
-        for(Card card : hand){
+        for(Card card : cardPool){
             suiteStats[card.getSuite()].add(card);
             numberStats[card.getNumber()].add(card);
             if (card.getNumber() == 0){
@@ -149,7 +148,7 @@ public class Player {
                         bestHand.clear();
                         bestHand.addAll(numberStats[i]);
                         int j = Card.MAX_NUMBER;
-                        while(j > -1 && kickerCount < 2){
+                        while(j > -1 && kickerCount < HAND_SIZE - 3){
                             if (j != i && !numberStats[j].isEmpty()){
                                 kickerCount++;
                                 bestHand.add(numberStats[j].get(0));
@@ -163,16 +162,60 @@ public class Player {
                 if (numberStats[i].size() == 2){
                     if (pair != null){
                         twoPair = pair;
-                        // TODO: bestHand handling
+                        if (score <= SCORE_TWO_PAIR){
+                            score = SCORE_TWO_PAIR;
+                            Boolean kickerAdded = false;
+                            bestHand.clear();
+                            bestHand.addAll(numberStats[i]);
+                            bestHand.addAll(numberStats[twoPair.getNumber()]);
+                            int j = Card.MAX_NUMBER;
+                            while(j > -1 && !kickerAdded){
+                                if (j != i && j != twoPair.getNumber() && !numberStats[j].isEmpty()){
+                                    kickerAdded = true;
+                                    bestHand.add(numberStats[j].get(0));
+                                }
+                                j--;
+                            }
+                        }
                     }
                     pair = numberStats[i].get(0);
+                    if (score < SCORE_PAIR){
+                        score = SCORE_PAIR;
+                        int kickerCount = 0;
+                        bestHand.clear();
+                        bestHand.addAll(numberStats[i]);
+                        int j = Card.MAX_NUMBER;
+                        while(j > -1 && kickerCount < (HAND_SIZE - 2)){
+                            if (j != i && !numberStats[j].isEmpty()){
+                                kickerCount++;
+                                bestHand.add(numberStats[j].get(0));
+                            }
+                            j--;
+                        }
+                    }
                 }
             }
         }
 
         // check for full house
         if (score < SCORE_FULL_HOUSE) {
-
+            if (twoTriple != null && pair != null){
+                ArrayList<Card> cards = new ArrayList<>();
+                score = SCORE_FULL_HOUSE;
+                cards.addAll(numberStats[twoTriple.getNumber()]);
+                cards.addAll(numberStats[triple.getNumber()]);
+                cards.addAll(numberStats[pair.getNumber()]);
+                Collections.sort(cards, new Card.CardComparatorDescending());
+                bestHand.clear();
+                for (int i = 0; i < HAND_SIZE; i++) {
+                    bestHand.add(cards.get(i));
+                }
+            } else if (triple != null && pair != null){
+                score = SCORE_FULL_HOUSE;
+                bestHand.clear();
+                bestHand.addAll(numberStats[triple.getNumber()]);
+                bestHand.addAll(numberStats[pair.getNumber()]);
+            }
         }
 
 
@@ -182,14 +225,17 @@ public class Player {
         return score;
     }
 
-    public int getHighestNumberOfHand() {
-        return highestNumberOfHand.getNumber();
-    }
-
     public int getScore() {
         return score;
     }
 
+    public ArrayList<Card> getBestHand() {
+        return bestHand;
+    }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
 
     // null if no straight, straight hand if straight exists
     private ArrayList<Card> hasStraight(ArrayList<Card> cards){
