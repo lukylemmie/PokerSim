@@ -78,16 +78,21 @@ public class Card {
     static class CardComparatorAscending implements Comparator<Card>{
         public int compare(Card card1, Card card2){
             int isLarger = card1.getNumber() - card2.getNumber();
-            if(isLarger != 0 && card2.getNumber() == 0){
-                isLarger = -1;
-            } else if(isLarger != 0 && card1.getNumber() == 0){
-                isLarger = 1;
-            }
 
-            if (isLarger == 0 && card2.isInHand()){
-                isLarger = -1;
-            } else if (isLarger == 0 && card1.isInHand()){
-                isLarger = 1;
+            if (isLarger != 0) {
+                if (card2.getNumber() == 0) {
+                    isLarger = -1;
+                } else if (card1.getNumber() == 0) {
+                    isLarger = 1;
+                }
+            } else {
+                if (card2.isInHand()) {
+                    isLarger = -1;
+                } else if (card1.isInHand()) {
+                    isLarger = 1;
+                } else {
+                    isLarger = card1.getSuite() - card2.getSuite();
+                }
             }
 
             return isLarger;
@@ -102,16 +107,21 @@ public class Card {
     static class CardComparatorDescending implements Comparator<Card>{
         public int compare(Card card1, Card card2){
             int isLarger = card2.getNumber() - card1.getNumber();
-            if(isLarger != 0 && card2.getNumber() == 0){
-                isLarger = 1;
-            } else if(isLarger != 0 && card1.getNumber() == 0){
-                isLarger = -1;
-            }
 
-            if (isLarger == 0 && card2.isInHand()){
-                isLarger = 1;
-            } else if (isLarger == 0 && card1.isInHand()){
-                isLarger = -1;
+            if (isLarger != 0) {
+                if (card2.getNumber() == 0) {
+                    isLarger = 1;
+                } else if (card1.getNumber() == 0) {
+                    isLarger = -1;
+                }
+            } else {
+                if (card2.isInHand()) {
+                    isLarger = 1;
+                } else if (card1.isInHand()) {
+                    isLarger = -1;
+                } else {
+                    isLarger = card1.getSuite() - card2.getSuite();
+                }
             }
 
             return isLarger;

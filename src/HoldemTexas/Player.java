@@ -68,7 +68,7 @@ public class Player {
         hand.addAll(cards);
     }
 
-    public int calculateScoreAndBestHand(ArrayList<Card> table){
+    public void calculateScoreAndBestHand(ArrayList<Card> table){
         ArrayList<Card> cardPool = new ArrayList<>();
         cardPool.addAll(table);
         cardPool.addAll(hand);
@@ -217,12 +217,6 @@ public class Player {
                 bestHand.addAll(numberStats[pair.getNumber()]);
             }
         }
-
-
-
-
-
-        return score;
     }
 
     public int getScore() {
