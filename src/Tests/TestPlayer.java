@@ -27,6 +27,10 @@ public class TestPlayer {
         System.out.println("testPlayer.test13() = " + testPlayer.test13());
         System.out.println("testPlayer.test14() = " + testPlayer.test14());
         System.out.println("testPlayer.test15() = " + testPlayer.test15());
+        System.out.println("testPlayer.test16() = " + testPlayer.test16());
+        System.out.println("testPlayer.test17() = " + testPlayer.test17());
+        System.out.println("testPlayer.test18() = " + testPlayer.test18());
+        System.out.println("testPlayer.test19() = " + testPlayer.test19());
     }
 
     public Boolean testScoring(ArrayList<Card> cards, Integer expectedScore, ArrayList<Card> expectedBestHand){
@@ -390,6 +394,102 @@ public class TestPlayer {
         expectedBestHand.add(new Card(0, 2));
 
         Integer expectedScore = Player.SCORE_FLUSH;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing full house, 2 triples and triple ace
+    public Boolean test16(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 2));
+        cards.add(new Card(1, 0));
+        cards.add(new Card(2, 6));
+        cards.add(new Card(3, 0));
+        cards.add(new Card(1, 2));
+        cards.add(new Card(2, 2));
+        cards.add(new Card(2, 0));
+
+        expectedBestHand.add(new Card(1, 0));
+        expectedBestHand.add(new Card(2, 0));
+        expectedBestHand.add(new Card(3, 0));
+        expectedBestHand.add(new Card(0, 2));
+        expectedBestHand.add(new Card(1, 2));
+
+        Integer expectedScore = Player.SCORE_FULL_HOUSE;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing 4 of a kind
+    public Boolean test17(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 2));
+        cards.add(new Card(1, 3));
+        cards.add(new Card(2, 6));
+        cards.add(new Card(3, 2));
+        cards.add(new Card(1, 2));
+        cards.add(new Card(2, 0));
+        cards.add(new Card(2, 2));
+
+        expectedBestHand.add(new Card(0, 2));
+        expectedBestHand.add(new Card(1, 2));
+        expectedBestHand.add(new Card(2, 2));
+        expectedBestHand.add(new Card(3, 2));
+        expectedBestHand.add(new Card(2, 0));
+
+        Integer expectedScore = Player.SCORE_4_OF_A_KIND;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing straight ace 5 high
+    public Boolean test18(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 3));
+        cards.add(new Card(1, 4));
+        cards.add(new Card(2, 3));
+        cards.add(new Card(3, 4));
+        cards.add(new Card(1, 2));
+        cards.add(new Card(2, 0));
+        cards.add(new Card(3, 1));
+
+        expectedBestHand.add(new Card(1, 4));
+        expectedBestHand.add(new Card(0, 3));
+        expectedBestHand.add(new Card(1, 2));
+        expectedBestHand.add(new Card(3, 1));
+        expectedBestHand.add(new Card(2, 0));
+
+        Integer expectedScore = Player.SCORE_STRAIGHT;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing straight 10 ace high
+    public Boolean test19(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 10));
+        cards.add(new Card(1, 9));
+        cards.add(new Card(2, 3));
+        cards.add(new Card(3, 4));
+        cards.add(new Card(1, 12));
+        cards.add(new Card(2, 0));
+        cards.add(new Card(3, 11));
+
+        expectedBestHand.add(new Card(2, 0));
+        expectedBestHand.add(new Card(1, 12));
+        expectedBestHand.add(new Card(3, 11));
+        expectedBestHand.add(new Card(0, 10));
+        expectedBestHand.add(new Card(1, 9));
+
+        Integer expectedScore = Player.SCORE_STRAIGHT;
 
         return testScoring(cards, expectedScore, expectedBestHand);
     }

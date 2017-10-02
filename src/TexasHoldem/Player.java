@@ -129,13 +129,12 @@ public class Player {
                     bestHand.clear();
                     bestHand.addAll(numberStats[quadruple.getNumber()]);
                     Boolean kickerAdded = false;
-                    int j = Card.MAX_NUMBER;
-                    while (j > -1 && !kickerAdded){
+
+                    for (int j = Card.MAX_NUMBER; !kickerAdded && j > -1; j--){
                         if (j != i && !numberStats[j].isEmpty()){
                             kickerAdded = true;
                             bestHand.add(numberStats[j].get(0));
                         }
-                        j--;
                     }
                 }
             }
@@ -152,13 +151,12 @@ public class Player {
                         int kickerCount = 0;
                         bestHand.clear();
                         bestHand.addAll(numberStats[i]);
-                        int j = Card.MAX_NUMBER;
-                        while(j > -1 && kickerCount < HAND_SIZE - 3){
+
+                        for (int j = Card.MAX_NUMBER; kickerCount < HAND_SIZE - 3 && j > -1; j--){
                             if (j != i && !numberStats[j].isEmpty()){
                                 kickerCount++;
                                 bestHand.add(numberStats[j].get(0));
                             }
-                            j--;
                         }
                     }
                 }
@@ -173,13 +171,11 @@ public class Player {
                             bestHand.clear();
                             bestHand.addAll(numberStats[i]);
                             bestHand.addAll(numberStats[twoPair.getNumber()]);
-                            int j = Card.MAX_NUMBER;
-                            while(j > -1 && !kickerAdded){
+                            for (int j = Card.MAX_NUMBER; !kickerAdded && j > -1; j--){
                                 if (j != i && j != twoPair.getNumber() && !numberStats[j].isEmpty()){
                                     kickerAdded = true;
                                     bestHand.add(numberStats[j].get(0));
                                 }
-                                j--;
                             }
                         }
                     }
@@ -189,13 +185,11 @@ public class Player {
                         int kickerCount = 0;
                         bestHand.clear();
                         bestHand.addAll(numberStats[i]);
-                        int j = Card.MAX_NUMBER;
-                        while(j > -1 && kickerCount < (HAND_SIZE - 2)){
+                        for (int j = Card.MAX_NUMBER; kickerCount < (HAND_SIZE - 2) && j > -1; j--){
                             if (j != i && !numberStats[j].isEmpty()){
                                 kickerCount++;
                                 bestHand.add(numberStats[j].get(0));
                             }
-                            j--;
                         }
                     }
                 }
@@ -301,7 +295,7 @@ public class Player {
     }
 
     private void playerHasStraight(){
-        for (int i = 0; i < Card.MAX_NUMBER + 1 - HAND_SIZE; i++) {
+        for (int i = 0; i < Card.MAX_NUMBER + 1 - (HAND_SIZE - 1); i++) {
             Boolean straight = true;
 
             for (int j = i; straight && j < i + HAND_SIZE; j++) {
