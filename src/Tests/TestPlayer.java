@@ -31,6 +31,7 @@ public class TestPlayer {
         System.out.println("testPlayer.test17() = " + testPlayer.test17());
         System.out.println("testPlayer.test18() = " + testPlayer.test18());
         System.out.println("testPlayer.test19() = " + testPlayer.test19());
+        System.out.println("testPlayer.test20() = " + testPlayer.test20());
     }
 
     public Boolean testScoring(ArrayList<Card> cards, Integer expectedScore, ArrayList<Card> expectedBestHand){
@@ -490,6 +491,30 @@ public class TestPlayer {
         expectedBestHand.add(new Card(1, 9));
 
         Integer expectedScore = Player.SCORE_STRAIGHT;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing 4 of a kind2
+    public Boolean test20(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 2));
+        cards.add(new Card(1, 0));
+        cards.add(new Card(3, 0));
+        cards.add(new Card(3, 2));
+        cards.add(new Card(1, 2));
+        cards.add(new Card(2, 0));
+        cards.add(new Card(2, 2));
+
+        expectedBestHand.add(new Card(0, 2));
+        expectedBestHand.add(new Card(1, 2));
+        expectedBestHand.add(new Card(2, 2));
+        expectedBestHand.add(new Card(3, 2));
+        expectedBestHand.add(new Card(1, 0));
+
+        Integer expectedScore = Player.SCORE_4_OF_A_KIND;
 
         return testScoring(cards, expectedScore, expectedBestHand);
     }
