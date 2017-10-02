@@ -27,7 +27,7 @@ public class Player {
     private Card pair = null;
     private Card twoPair = null;
 
-    private int score = -1;
+    private int score = SCORE_UNDEFINED;
     /*
         scoring
         -1 = undefined
@@ -53,7 +53,12 @@ public class Player {
     public static final int SCORE_STRAIGHT_FLUSH = 8;
 
     public Player(){
-
+        for (int i = 0; i < Card.MAX_SUITE; i++) {
+            suiteStats[i] = new ArrayList<>();
+        }
+        for (int i = 0; i < Card.MAX_NUMBER + 1; i++) {
+            numberStats[i] = new ArrayList<>();
+        }
     }
 
     public void addCard(Card card){
@@ -215,6 +220,17 @@ public class Player {
                 bestHand.clear();
                 bestHand.addAll(numberStats[triple.getNumber()]);
                 bestHand.addAll(numberStats[pair.getNumber()]);
+            }
+        }
+
+        // no combinations
+        if (score < SCORE_HIGH_NUMBER){
+            score = SCORE_HIGH_NUMBER;
+            bestHand.clear();
+            for (int i = 0; i < HAND_SIZE; i++) {
+                if (cardPool.size() >= HAND_SIZE) {
+                    bestHand.add(cardPool.get(i));
+                }
             }
         }
     }
