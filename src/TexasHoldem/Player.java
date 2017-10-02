@@ -2,15 +2,20 @@ package TexasHoldem;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Andrew on 23/09/2017.
  */
 public class Player {
-    public static final int HAND_SIZE = 5;
+    public static final int HAND_SIZE = 2;
+    public static final int POKER_HAND_SIZE = 5;
     public static final int QUADRUPLE = 4;
     public static final int TRIPLE = 3;
     public static final int PAIR = 2;
+
+    private final Integer playerNumber;
+    private Boolean inferiorHand = false;
 
     private ArrayList<Card> hand = new ArrayList<>();
     private ArrayList<Card> bestHand = new ArrayList<>();
@@ -27,7 +32,7 @@ public class Player {
     private Card pair = null;
     private Card twoPair = null;
 
-    private int score = SCORE_UNDEFINED;
+    private Integer score = SCORE_UNDEFINED;
     /*
         scoring
         -1 = undefined
@@ -53,12 +58,47 @@ public class Player {
     public static final int SCORE_STRAIGHT_FLUSH = 8;
 
     public Player(){
+        playerNumber = -1;
         for (int i = 0; i < Card.MAX_SUITE; i++) {
             suiteStats[i] = new ArrayList<>();
         }
         for (int i = 0; i < Card.MAX_NUMBER + 1; i++) {
             numberStats[i] = new ArrayList<>();
         }
+    }
+
+    public Player(int playerNumber){
+        this.playerNumber = playerNumber;
+        for (int i = 0; i < Card.MAX_SUITE; i++) {
+            suiteStats[i] = new ArrayList<>();
+        }
+        for (int i = 0; i < Card.MAX_NUMBER + 1; i++) {
+            numberStats[i] = new ArrayList<>();
+        }
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public ArrayList<Card> getBestHand() {
+        return bestHand;
+    }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
+    public Integer getPlayerNumber() {
+        return playerNumber;
+    }
+
+    public Boolean getInferiorHand() {
+        return inferiorHand;
+    }
+
+    public void setInferiorHand(Boolean inferiorHand) {
+        this.inferiorHand = inferiorHand;
     }
 
     public void addCard(Card card){
@@ -152,7 +192,7 @@ public class Player {
                         bestHand.clear();
                         bestHand.addAll(numberStats[i]);
 
-                        for (int j = Card.MAX_NUMBER; kickerCount < HAND_SIZE - 3 && j > -1; j--){
+                        for (int j = Card.MAX_NUMBER; kickerCount < POKER_HAND_SIZE - 3 && j > -1; j--){
                             if (j != i && !numberStats[j].isEmpty()){
                                 kickerCount++;
                                 bestHand.add(numberStats[j].get(0));
@@ -185,7 +225,7 @@ public class Player {
                         int kickerCount = 0;
                         bestHand.clear();
                         bestHand.addAll(numberStats[i]);
-                        for (int j = Card.MAX_NUMBER; kickerCount < (HAND_SIZE - 2) && j > -1; j--){
+                        for (int j = Card.MAX_NUMBER; kickerCount < (POKER_HAND_SIZE - 2) && j > -1; j--){
                             if (j != i && !numberStats[j].isEmpty()){
                                 kickerCount++;
                                 bestHand.add(numberStats[j].get(0));
@@ -206,7 +246,7 @@ public class Player {
                 cards.addAll(numberStats[pair.getNumber()]);
                 Collections.sort(cards, new Card.CardComparatorDescending());
                 bestHand.clear();
-                for (int i = 0; i < HAND_SIZE; i++) {
+                for (int i = 0; i < POKER_HAND_SIZE; i++) {
                     bestHand.add(cards.get(i));
                 }
             } else if (twoTriple != null){
@@ -216,7 +256,7 @@ public class Player {
                 cards.addAll(numberStats[triple.getNumber()]);
                 Collections.sort(cards, new Card.CardComparatorDescending());
                 bestHand.clear();
-                for (int i = 0; i < HAND_SIZE; i++) {
+                for (int i = 0; i < POKER_HAND_SIZE; i++) {
                     bestHand.add(cards.get(i));
                 }
             } else if (triple != null && pair != null){
@@ -231,24 +271,12 @@ public class Player {
         if (score < SCORE_HIGH_NUMBER){
             score = SCORE_HIGH_NUMBER;
             bestHand.clear();
-            for (int i = 0; i < HAND_SIZE; i++) {
-                if (cardPool.size() >= HAND_SIZE) {
+            for (int i = 0; i < POKER_HAND_SIZE; i++) {
+                if (i < cardPool.size()) {
                     bestHand.add(cardPool.get(i));
                 }
             }
         }
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public ArrayList<Card> getBestHand() {
-        return bestHand;
-    }
-
-    public ArrayList<Card> getHand() {
-        return hand;
     }
 
     // null if no straight, straight hand if straight exists
@@ -267,16 +295,16 @@ public class Player {
             }
         }
 
-        for (int i = 0; i < Card.MAX_NUMBER + 1 - (HAND_SIZE - 1); i++) {
+        for (int i = 0; i < Card.MAX_NUMBER + 1 - (POKER_HAND_SIZE - 1); i++) {
             Boolean straight = true;
-            for (int j = 0; straight && j < HAND_SIZE; j++) {
+            for (int j = 0; straight && j < POKER_HAND_SIZE; j++) {
                 straight &= !numbers[i + j].isEmpty();
             }
             if (straight){
                 if (!straightHand.isEmpty()){
                     straightHand.clear();
                 }
-                for (int j = HAND_SIZE - 1; j >= 0; j--) {
+                for (int j = POKER_HAND_SIZE - 1; j >= 0; j--) {
                     straightHand.add(numbers[i + j].get(0));
                 }
             }
@@ -287,11 +315,11 @@ public class Player {
 
     private void playerHasFlush(){
         for (ArrayList<Card> cards : suiteStats) {
-            if (cards.size() >= HAND_SIZE) {
-                if (cards.size() > HAND_SIZE) {
+            if (cards.size() >= POKER_HAND_SIZE) {
+                if (cards.size() > POKER_HAND_SIZE) {
                     multiFlush = true;
                 }
-                for (int i = 0; i < HAND_SIZE; i++) {
+                for (int i = 0; i < POKER_HAND_SIZE; i++) {
                     bestFlush.add(cards.get(i));
                 }
             }
@@ -299,10 +327,10 @@ public class Player {
     }
 
     private void playerHasStraight(){
-        for (int i = 0; i < Card.MAX_NUMBER + 1 - (HAND_SIZE - 1); i++) {
+        for (int i = 0; i < Card.MAX_NUMBER + 1 - (POKER_HAND_SIZE - 1); i++) {
             Boolean straight = true;
 
-            for (int j = 0; straight && j < HAND_SIZE; j++) {
+            for (int j = 0; straight && j < POKER_HAND_SIZE; j++) {
                 straight &= !numberStats[i + j].isEmpty();
             }
             if (straight){
@@ -310,10 +338,43 @@ public class Player {
                     multiStraight = true;
                     bestStraight.clear();
                 }
-                for (int j = HAND_SIZE - 1; j >= 0; j--) {
+                for (int j = POKER_HAND_SIZE - 1; j >= 0; j--) {
                     bestStraight.add(numberStats[i + j].get(0));
                 }
             }
+        }
+    }
+
+    public static class PlayerComparatorDescending implements Comparator<Player> {
+        public int compare(Player player1, Player player2){
+            int isLarger = player2.getScore() - player1.getScore();
+
+            if (isLarger == 0){
+                isLarger = compareHands(player1, player2);
+            }
+
+            if (isLarger < 0){
+                player2.setInferiorHand(true);
+            }
+            if (isLarger > 0){
+                player1.setInferiorHand(true);
+            }
+
+            return isLarger;
+        }
+
+        private int compareHands(Player player1, Player player2){
+            int isLarger = 0;
+            ArrayList<Card> player1Hand = player1.getBestHand();
+            ArrayList<Card> player2Hand = player2.getBestHand();
+
+            int i = 0;
+            while (isLarger == 0 && i < POKER_HAND_SIZE) {
+                isLarger = Card.compareDesc(player1Hand.get(i), player2Hand.get(i));
+                i++;
+            }
+
+            return isLarger;
         }
     }
 }

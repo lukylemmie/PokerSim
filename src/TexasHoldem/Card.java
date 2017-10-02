@@ -14,7 +14,6 @@ public class Card {
 
     private final Integer suite;  // Spades (0), Hearts (1), Clubs (2), Diamonds (3)
     private final Integer number;  // 0 - 12
-    private boolean onTable = false;
     private boolean inHand = false;
 
 
@@ -35,14 +34,6 @@ public class Card {
         return SUITES[suite].toString() + NUMBERS[number];
     }
 
-    public boolean isOnTable() {
-        return onTable;
-    }
-
-    public void setOnTable(boolean onTable) {
-        this.onTable = onTable;
-    }
-
     public boolean isInHand() {
         return inHand;
     }
@@ -51,9 +42,10 @@ public class Card {
         this.inHand = inHand;
     }
 
-    // negative if this < card
+    // negative if card1 < card2
     // 0 if same
-    // positive if this > card
+    // positive if card1 > card2
+    // does not compare suite
     public static int compare(Card card1, Card card2){
         Integer isLarger = card1.getNumber() - card2.getNumber();
         if(isLarger != 0 && card2.getNumber() == 0){
@@ -71,10 +63,32 @@ public class Card {
         return isLarger;
     }
 
+    // negative if card1 > card2
+    // 0 if same
+    // positive if card1 < card2
+    // does not compare suite
+    public static int compareDesc(Card card1, Card card2){
+        Integer isLarger = card2.getNumber() - card1.getNumber();
+        if(isLarger != 0 && card2.getNumber() == 0){
+            isLarger = 1;
+        } else if(isLarger != 0 && card1.getNumber() == 0){
+            isLarger = -1;
+        }
+
+        if (isLarger == 0 && card2.isInHand()){
+            isLarger = 1;
+        } else if (isLarger == 0 && card1.isInHand()){
+            isLarger = -1;
+        }
+
+        return isLarger;
+    }
+
     /*
-    returns negative if this < card
-    returns 0 if this == card
-    returns positive if this > card
+    returns negative if card1 < card2
+    returns 0 if card1 == card2
+    returns positive if card1 > card2
+    compares suites
      */
     public static class CardComparatorAscending implements Comparator<Card>{
         public int compare(Card card1, Card card2){
@@ -101,9 +115,10 @@ public class Card {
     }
 
     /*
-    returns negative if this > card
-    returns 0 if this == card
-    returns positive if this < card
+    returns negative if card1 > card2
+    returns 0 if card1 == card2
+    returns positive if card1 < card2
+    compares suites
      */
     public static class CardComparatorDescending implements Comparator<Card>{
         public int compare(Card card1, Card card2){

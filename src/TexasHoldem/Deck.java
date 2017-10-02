@@ -7,7 +7,7 @@ import java.util.Collections;
  * Created by Andrew on 23/09/2017.
  */
 public class Deck {
-    ArrayList<Card> deck = new ArrayList<>();
+    private ArrayList<Card> deck = new ArrayList<>();
 
     public Deck(){
         for (int suite = 0; suite < Card.MAX_SUITE; suite++) {
@@ -15,6 +15,10 @@ public class Deck {
                 deck.add(new Card(suite, number));
             }
         }
+    }
+
+    public Deck(ArrayList<Card> testCards){
+        deck = testCards;
     }
 
     public void shuffle(){
