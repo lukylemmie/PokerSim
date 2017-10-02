@@ -1,4 +1,4 @@
-package HoldemTexas;
+package TexasHoldem;
 
 import java.util.ArrayList;
 import java.util.Collections;

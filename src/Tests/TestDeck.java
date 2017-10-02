@@ -1,6 +1,6 @@
 package Tests;
 
-import HoldemTexas.Deck;
+import TexasHoldem.Deck;
 
 /**
  * Created by Andrew on 23/09/2017.

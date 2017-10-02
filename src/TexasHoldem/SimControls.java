@@ -1,4 +1,4 @@
-package HoldemTexas;
+package TexasHoldem;
 
 /**
  * Created by Andrew on 30/09/2017.

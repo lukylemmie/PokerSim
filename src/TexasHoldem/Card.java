@@ -1,4 +1,4 @@
-package HoldemTexas;
+package TexasHoldem;
 
 import java.util.Comparator;
 
@@ -75,7 +75,7 @@ public class Card {
     returns 0 if this == card
     returns positive if this > card
      */
-    static class CardComparatorAscending implements Comparator<Card>{
+    public static class CardComparatorAscending implements Comparator<Card>{
         public int compare(Card card1, Card card2){
             int isLarger = card1.getNumber() - card2.getNumber();
 
@@ -104,7 +104,7 @@ public class Card {
     returns 0 if this == card
     returns positive if this < card
      */
-    static class CardComparatorDescending implements Comparator<Card>{
+    public static class CardComparatorDescending implements Comparator<Card>{
         public int compare(Card card1, Card card2){
             int isLarger = card2.getNumber() - card1.getNumber();
 

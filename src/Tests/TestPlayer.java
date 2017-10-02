@@ -1,7 +1,7 @@
 package Tests;
 
-import HoldemTexas.Card;
-import HoldemTexas.Player;
+import TexasHoldem.Card;
+import TexasHoldem.Player;
 
 import java.util.ArrayList;
 
