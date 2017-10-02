@@ -294,7 +294,7 @@ public class Player {
         for (int i = 0; i < Card.MAX_NUMBER + 1 - HAND_SIZE; i++) {
             Boolean straight = true;
             for (int j = 0; straight && j < HAND_SIZE; j++) {
-                straight &= !numberStats[i].isEmpty();
+                straight &= !numberStats[j].isEmpty();
             }
             if (straight){
                 if (!bestStraight.isEmpty()){
