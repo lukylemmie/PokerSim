@@ -215,6 +215,16 @@ public class Player {
                 for (int i = 0; i < HAND_SIZE; i++) {
                     bestHand.add(cards.get(i));
                 }
+            } else if (twoTriple != null){
+                ArrayList<Card> cards = new ArrayList<>();
+                score = SCORE_FULL_HOUSE;
+                cards.addAll(numberStats[twoTriple.getNumber()]);
+                cards.addAll(numberStats[triple.getNumber()]);
+                Collections.sort(cards, new Card.CardComparatorDescending());
+                bestHand.clear();
+                for (int i = 0; i < HAND_SIZE; i++) {
+                    bestHand.add(cards.get(i));
+                }
             } else if (triple != null && pair != null){
                 score = SCORE_FULL_HOUSE;
                 bestHand.clear();
