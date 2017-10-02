@@ -127,7 +127,7 @@ public class Player {
                     quadruple = numberStats[i].get(0);
                     score = SCORE_4_OF_A_KIND;
                     bestHand.clear();
-                    bestHand.addAll(numberStats[i]);
+                    bestHand.addAll(numberStats[quadruple.getNumber()]);
                     Boolean kickerAdded = false;
                     int j = Card.MAX_NUMBER;
                     while (j > -1 && !kickerAdded){
@@ -303,7 +303,7 @@ public class Player {
     private void playerHasStraight(){
         for (int i = 0; i < Card.MAX_NUMBER + 1 - HAND_SIZE; i++) {
             Boolean straight = true;
-            for (int j = 0; straight && j < HAND_SIZE; j++) {
+            for (int j = i; j < i + HAND_SIZE; j++) {
                 straight &= !numberStats[j].isEmpty();
             }
             if (straight){
@@ -311,7 +311,7 @@ public class Player {
                     multiStraight = true;
                     bestStraight.clear();
                 }
-                for (int j = 0; j < HAND_SIZE; j++) {
+                for (int j = HAND_SIZE - 1; j >= 0; j--) {
                     bestStraight.add(numberStats[i + j].get(0));
                 }
             }
