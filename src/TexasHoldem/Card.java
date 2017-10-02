@@ -7,7 +7,7 @@ import java.util.Comparator;
  */
 public class Card {
     public static final Character[] SUITES = {'s', 'h', 'c', 'd'};
-    public static final String[] NUMBERS = {"A", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    public static final String[] NUMBERS = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     public static final int MAX_SUITE = 4;
     public static final int MIN_NUMBER = 1;
     public static final int MAX_NUMBER = 13;

@@ -8,16 +8,14 @@ import java.util.Collections;
  */
 public class Game implements SimControls {
     private final static Integer TABLE_SIZE = 5;
-    private Deck deck;
     private Integer numberOfPlayers = DEFAULT_PLAYER_COUNT;
+    private Deck deck;
     private ArrayList<Player> players;
     private ArrayList<Card> table;
     private ArrayList<Player> rankedPlayers;
     private ArrayList<Integer> winners;
 
     public Game(){
-        deck = new Deck();
-        deck.shuffle();
     }
 
     public Game(Deck testDeck){
@@ -31,11 +29,13 @@ public class Game implements SimControls {
 
     @Override
     public void runGame() {
+        deck = new Deck();
         players = new ArrayList<>();
         table = new ArrayList<>();
         rankedPlayers = new ArrayList<>();
         winners = new ArrayList<>();
 
+        deck.shuffle();
         for (int i = 0; i < numberOfPlayers; i++) {
             players.add(new Player(i));
         }
@@ -60,35 +60,35 @@ public class Game implements SimControls {
     }
 
     @Override
-    public String getWinners() {
-        return winners.toString();
+    public ArrayList<Integer> getWinners() {
+        return winners;
     }
 
     @Override
-    public String getWinnerHands() {
-        ArrayList<String> winningHands = new ArrayList<>();
-        for (Integer winner : winners){
-            winningHands.add(players.get(winner).getHand().toString());
-        }
-        return winningHands.toString();
+    public String getPlayerHand(int player) {
+        return players.get(player).getHand().toString();
     }
 
     /*
         returns the results based on the following format
-        1:(int)PLACE_1_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
-        2:(int)PLACE_2_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
-        3:(int)PLACE_3_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
-        4:(int)PLACE_4_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
-        5:(int)PLACE_5_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
+        1:(int)PLACE_1_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
+        2:(int)PLACE_2_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
+        3:(int)PLACE_3_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
+        4:(int)PLACE_4_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
+        5:(int)PLACE_5_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
      */
     @Override
     public String getResults() {
-        String output = "";
+        String output = "table:" + table.toString() + "\n";
         Integer place = 1;
         for (int i = 0; i < numberOfPlayers; i++) {
             Player player = rankedPlayers.get(i);
+            if (player.getInferiorHand()){
+                place++;
+            }
             output += place + ":" + player.getPlayerNumber() +
                     ", Hand:" + player.getHand().toString() +
+                    ", Score:" + player.getScore().toString() +
                     ", BestHand:" + player.getBestHand().toString() + "\n";
         }
         return output;

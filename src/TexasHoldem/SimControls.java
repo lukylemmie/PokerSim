@@ -19,23 +19,23 @@ public interface SimControls {
 
     /*
         returns the winner's position (default: 0-4)
-        format: [i, j, k, ...]
      */
-    String getWinners();
+    ArrayList<Integer> getWinners();
 
     /*
         returns a string of the following format
-        [[(string)CARD1, (string)CARD2], [(string)CARD1, (string)CARD2], ... ]
+        [(string)CARD1, (string)CARD2]
      */
-    String getWinnerHands();
+    String getPlayerHand(int player);
 
     /*
         returns the results based on the following format
-        1:(int)PLACE_1_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
-        2:(int)PLACE_2_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
-        3:(int)PLACE_3_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
-        4:(int)PLACE_4_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
-        5:(int)PLACE_5_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], BestHand:[list of cards]
+        table:[list of cards]
+        1:(int)PLACE_1_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
+        2:(int)PLACE_2_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
+        3:(int)PLACE_3_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
+        4:(int)PLACE_4_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
+        5:(int)PLACE_5_POSITION, Hand:[(string)PLACE_1_CARD_1, (string)PLACE_1_CARD_2], Score:(int)score, BestHand:[list of cards]
      */
     String getResults();
 }
