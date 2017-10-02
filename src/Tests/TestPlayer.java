@@ -32,6 +32,9 @@ public class TestPlayer {
         System.out.println("testPlayer.test18() = " + testPlayer.test18());
         System.out.println("testPlayer.test19() = " + testPlayer.test19());
         System.out.println("testPlayer.test20() = " + testPlayer.test20());
+        System.out.println("testPlayer.test21() = " + testPlayer.test21());
+        System.out.println("testPlayer.test22() = " + testPlayer.test22());
+        System.out.println("testPlayer.test23() = " + testPlayer.test23());
     }
 
     public Boolean testScoring(ArrayList<Card> cards, Integer expectedScore, ArrayList<Card> expectedBestHand){
@@ -515,6 +518,78 @@ public class TestPlayer {
         expectedBestHand.add(new Card(1, 0));
 
         Integer expectedScore = Player.SCORE_4_OF_A_KIND;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing straight ace 5 high flush
+    public Boolean test21(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 3));
+        cards.add(new Card(1, 4));
+        cards.add(new Card(3, 3));
+        cards.add(new Card(3, 4));
+        cards.add(new Card(3, 2));
+        cards.add(new Card(3, 0));
+        cards.add(new Card(3, 1));
+
+        expectedBestHand.add(new Card(3, 4));
+        expectedBestHand.add(new Card(3, 3));
+        expectedBestHand.add(new Card(3, 2));
+        expectedBestHand.add(new Card(3, 1));
+        expectedBestHand.add(new Card(3, 0));
+
+        Integer expectedScore = Player.SCORE_STRAIGHT_FLUSH;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing straight 10 ace high flush
+    public Boolean test22(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(3, 10));
+        cards.add(new Card(3, 9));
+        cards.add(new Card(2, 3));
+        cards.add(new Card(3, 4));
+        cards.add(new Card(3, 12));
+        cards.add(new Card(3, 0));
+        cards.add(new Card(3, 11));
+
+        expectedBestHand.add(new Card(3, 0));
+        expectedBestHand.add(new Card(3, 12));
+        expectedBestHand.add(new Card(3, 11));
+        expectedBestHand.add(new Card(3, 10));
+        expectedBestHand.add(new Card(3, 9));
+
+        Integer expectedScore = Player.SCORE_STRAIGHT_FLUSH;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing straight ace 7 high flush
+    public Boolean test23(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(3, 6));
+        cards.add(new Card(3, 5));
+        cards.add(new Card(3, 3));
+        cards.add(new Card(3, 4));
+        cards.add(new Card(3, 2));
+        cards.add(new Card(3, 0));
+        cards.add(new Card(3, 1));
+
+        expectedBestHand.add(new Card(3, 6));
+        expectedBestHand.add(new Card(3, 5));
+        expectedBestHand.add(new Card(3, 4));
+        expectedBestHand.add(new Card(3, 3));
+        expectedBestHand.add(new Card(3, 2));
+
+        Integer expectedScore = Player.SCORE_STRAIGHT_FLUSH;
 
         return testScoring(cards, expectedScore, expectedBestHand);
     }

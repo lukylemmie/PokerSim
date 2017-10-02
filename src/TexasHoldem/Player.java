@@ -256,6 +256,10 @@ public class Player {
         ArrayList<Card> straightHand = new ArrayList<>();
         ArrayList<Card>[] numbers = new ArrayList[Card.MAX_NUMBER + 1];
 
+        for (int i = 0; i < Card.MAX_NUMBER + 1; i++) {
+            numbers[i] = new ArrayList<>();
+        }
+
         for(Card card : cards){
             numbers[card.getNumber()].add(card);
             if (card.getNumber() == 0){
@@ -263,16 +267,16 @@ public class Player {
             }
         }
 
-        for (int i = 0; i <= Card.MAX_NUMBER - HAND_SIZE; i++) {
+        for (int i = 0; i < Card.MAX_NUMBER + 1 - (HAND_SIZE - 1); i++) {
             Boolean straight = true;
             for (int j = 0; straight && j < HAND_SIZE; j++) {
-                straight &= !numbers[i].isEmpty();
+                straight &= !numbers[i + j].isEmpty();
             }
             if (straight){
                 if (!straightHand.isEmpty()){
                     straightHand.clear();
                 }
-                for (int j = 0; j < HAND_SIZE; j++) {
+                for (int j = HAND_SIZE - 1; j >= 0; j--) {
                     straightHand.add(numbers[i + j].get(0));
                 }
             }
@@ -298,8 +302,8 @@ public class Player {
         for (int i = 0; i < Card.MAX_NUMBER + 1 - (HAND_SIZE - 1); i++) {
             Boolean straight = true;
 
-            for (int j = i; straight && j < i + HAND_SIZE; j++) {
-                straight &= !numberStats[j].isEmpty();
+            for (int j = 0; straight && j < HAND_SIZE; j++) {
+                straight &= !numberStats[i + j].isEmpty();
             }
             if (straight){
                 if (!bestStraight.isEmpty()){
