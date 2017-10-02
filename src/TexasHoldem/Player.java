@@ -110,7 +110,7 @@ public class Player {
             }
 
             if (!bestStraight.isEmpty() && !bestFlush.isEmpty()) {
-                ArrayList<Card> cards = hasStraight(suiteStats[bestFlush.get(0).getSuite()]);
+                ArrayList<Card> cards = cardsHasStraight(suiteStats[bestFlush.get(0).getSuite()]);
                 if (!cards.isEmpty()) {
                     score = SCORE_STRAIGHT_FLUSH;
                     bestHand = cards;
@@ -252,7 +252,7 @@ public class Player {
     }
 
     // null if no straight, straight hand if straight exists
-    private ArrayList<Card> hasStraight(ArrayList<Card> cards){
+    private ArrayList<Card> cardsHasStraight(ArrayList<Card> cards){
         ArrayList<Card> straightHand = new ArrayList<>();
         ArrayList<Card>[] numbers = new ArrayList[Card.MAX_NUMBER + 1];
 
