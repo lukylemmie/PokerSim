@@ -303,7 +303,8 @@ public class Player {
     private void playerHasStraight(){
         for (int i = 0; i < Card.MAX_NUMBER + 1 - HAND_SIZE; i++) {
             Boolean straight = true;
-            for (int j = i; j < i + HAND_SIZE; j++) {
+
+            for (int j = i; straight && j < i + HAND_SIZE; j++) {
                 straight &= !numberStats[j].isEmpty();
             }
             if (straight){

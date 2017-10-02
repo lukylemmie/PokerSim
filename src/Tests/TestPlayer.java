@@ -23,6 +23,7 @@ public class TestPlayer {
         System.out.println("testPlayer.test09() = " + testPlayer.test09());
         System.out.println("testPlayer.test10() = " + testPlayer.test10());
         System.out.println("testPlayer.test11() = " + testPlayer.test11());
+        System.out.println("testPlayer.test12() = " + testPlayer.test12());
     }
 
     public Boolean testScoring(ArrayList<Card> cards, Integer expectedScore, ArrayList<Card> expectedBestHand){
@@ -288,6 +289,30 @@ public class TestPlayer {
         expectedBestHand.add(new Card(3, 4));
         expectedBestHand.add(new Card(2, 3));
         expectedBestHand.add(new Card(0, 2));
+
+        Integer expectedScore = Player.SCORE_STRAIGHT;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing straight2
+    public Boolean test12(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 3));
+        cards.add(new Card(1, 5));
+        cards.add(new Card(2, 3));
+        cards.add(new Card(3, 4));
+        cards.add(new Card(1, 2));
+        cards.add(new Card(2, 2));
+        cards.add(new Card(2, 6));
+
+        expectedBestHand.add(new Card(2, 6));
+        expectedBestHand.add(new Card(1, 5));
+        expectedBestHand.add(new Card(3, 4));
+        expectedBestHand.add(new Card(0, 3));
+        expectedBestHand.add(new Card(1, 2));
 
         Integer expectedScore = Player.SCORE_STRAIGHT;
 
