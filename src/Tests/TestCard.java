@@ -17,6 +17,7 @@ public class TestCard {
         System.out.println("testCard.test03() = " + testCard.test03());
         System.out.println("testCard.test04() = " + testCard.test04());
         System.out.println("testCard.test05() = " + testCard.test05());
+        System.out.println("testCard.test06() = " + testCard.test06());
     }
 
     public Boolean testSortDesc(ArrayList<Card> cards, ArrayList<Card> expectedCards){
@@ -24,12 +25,14 @@ public class TestCard {
         return cards.toString().equals(expectedCards.toString());
     }
 
+    // testing empty
     public Boolean test01(){
         ArrayList<Card> cards = new ArrayList<>();
         ArrayList<Card> sortedCards = new ArrayList<>();
         return testSortDesc(cards, sortedCards);
     }
 
+    // testing cards of same suite
     public Boolean test02(){
         ArrayList<Card> cards = new ArrayList<>();
         ArrayList<Card> sortedCards = new ArrayList<>();
@@ -49,6 +52,7 @@ public class TestCard {
         return testSortDesc(cards, sortedCards);
     }
 
+    // testing same suite and ace interaction
     public Boolean test03(){
         ArrayList<Card> cards = new ArrayList<>();
         ArrayList<Card> sortedCards = new ArrayList<>();
@@ -68,6 +72,7 @@ public class TestCard {
         return testSortDesc(cards, sortedCards);
     }
 
+    // testing different suites and same number
     public Boolean test04(){
         ArrayList<Card> cards = new ArrayList<>();
         ArrayList<Card> sortedCards = new ArrayList<>();
@@ -85,6 +90,7 @@ public class TestCard {
         return testSortDesc(cards, sortedCards);
     }
 
+    // testing different suites and same number with card ownership
     public Boolean test05(){
         ArrayList<Card> cards = new ArrayList<>();
         ArrayList<Card> sortedCards = new ArrayList<>();
@@ -100,6 +106,28 @@ public class TestCard {
         sortedCards.add(new Card(0, 4));
         sortedCards.add(new Card(2, 4));
         sortedCards.add(new Card(3, 4));
+
+        return testSortDesc(cards, sortedCards);
+    }
+
+    // testing same suite and ace interaction with card ownership
+    public Boolean test06(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> sortedCards = new ArrayList<>();
+
+        Card card = new Card(0, 4);
+        card.setInHand(true);
+        cards.add(card);
+        cards.add(new Card(0, 8));
+        cards.add(new Card(0, 0));
+        cards.add(new Card(0, 5));
+        cards.add(new Card(0, 2));
+
+        sortedCards.add(new Card(0, 0));
+        sortedCards.add(new Card(0, 8));
+        sortedCards.add(new Card(0, 5));
+        sortedCards.add(new Card(0, 4));
+        sortedCards.add(new Card(0, 2));
 
         return testSortDesc(cards, sortedCards);
     }
