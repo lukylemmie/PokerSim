@@ -24,6 +24,9 @@ public class TestPlayer {
         System.out.println("testPlayer.test10() = " + testPlayer.test10());
         System.out.println("testPlayer.test11() = " + testPlayer.test11());
         System.out.println("testPlayer.test12() = " + testPlayer.test12());
+        System.out.println("testPlayer.test13() = " + testPlayer.test13());
+        System.out.println("testPlayer.test14() = " + testPlayer.test14());
+        System.out.println("testPlayer.test15() = " + testPlayer.test15());
     }
 
     public Boolean testScoring(ArrayList<Card> cards, Integer expectedScore, ArrayList<Card> expectedBestHand){
@@ -315,6 +318,78 @@ public class TestPlayer {
         expectedBestHand.add(new Card(1, 2));
 
         Integer expectedScore = Player.SCORE_STRAIGHT;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing flush
+    public Boolean test13(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 2));
+        cards.add(new Card(0, 4));
+        cards.add(new Card(0, 6));
+        cards.add(new Card(0, 8));
+        cards.add(new Card(0, 10));
+        cards.add(new Card(0, 12));
+        cards.add(new Card(0, 0));
+
+        expectedBestHand.add(new Card(0, 0));
+        expectedBestHand.add(new Card(0, 12));
+        expectedBestHand.add(new Card(0, 10));
+        expectedBestHand.add(new Card(0, 8));
+        expectedBestHand.add(new Card(0, 6));
+
+        Integer expectedScore = Player.SCORE_FLUSH;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing flush2
+    public Boolean test14(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 2));
+        cards.add(new Card(0, 4));
+        cards.add(new Card(0, 6));
+        cards.add(new Card(0, 8));
+        cards.add(new Card(0, 10));
+        cards.add(new Card(1, 12));
+        cards.add(new Card(1, 0));
+
+        expectedBestHand.add(new Card(0, 10));
+        expectedBestHand.add(new Card(0, 8));
+        expectedBestHand.add(new Card(0, 6));
+        expectedBestHand.add(new Card(0, 4));
+        expectedBestHand.add(new Card(0, 2));
+
+        Integer expectedScore = Player.SCORE_FLUSH;
+
+        return testScoring(cards, expectedScore, expectedBestHand);
+    }
+
+    // testing flush3
+    public Boolean test15(){
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> expectedBestHand = new ArrayList<>();
+
+        cards.add(new Card(0, 2));
+        cards.add(new Card(2, 0));
+        cards.add(new Card(0, 6));
+        cards.add(new Card(1, 0));
+        cards.add(new Card(0, 10));
+        cards.add(new Card(0, 12));
+        cards.add(new Card(0, 0));
+
+        expectedBestHand.add(new Card(0, 0));
+        expectedBestHand.add(new Card(0, 12));
+        expectedBestHand.add(new Card(0, 10));
+        expectedBestHand.add(new Card(0, 6));
+        expectedBestHand.add(new Card(0, 2));
+
+        Integer expectedScore = Player.SCORE_FLUSH;
 
         return testScoring(cards, expectedScore, expectedBestHand);
     }

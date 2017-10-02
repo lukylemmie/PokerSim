@@ -119,8 +119,8 @@ public class Player {
 
         }
 
-
-        for (int i = 0; i < Card.MAX_NUMBER + 1; i++) {
+        // check for multiples of same card
+        for (int i = 1; i < Card.MAX_NUMBER + 1; i++) {
             // check for 4 of a kind
             if (score < SCORE_4_OF_A_KIND){
                 if (numberStats[i].size() == 4){
