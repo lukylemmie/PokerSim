@@ -48,16 +48,19 @@ public class Card {
     // does not compare suite
     public static int compare(Card card1, Card card2){
         Integer isLarger = card1.getNumber() - card2.getNumber();
-        if(isLarger != 0 && card2.getNumber() == 0){
-            isLarger = -1;
-        } else if(isLarger != 0 && card1.getNumber() == 0){
-            isLarger = 1;
-        }
 
-        if (isLarger == 0 && card2.isInHand()){
-            isLarger = -1;
-        } else if (isLarger == 0 && card1.isInHand()){
-            isLarger = 1;
+        if (isLarger != 0) {
+            if (card2.getNumber() == 0) {
+                isLarger = -1;
+            } else if (card1.getNumber() == 0) {
+                isLarger = 1;
+            }
+        } else {
+            if (!card1.isInHand() && card2.isInHand()) {
+                isLarger = -1;
+            } else if (card1.isInHand() && !card2.isInHand()) {
+                isLarger = 1;
+            }
         }
 
         return isLarger;
@@ -69,16 +72,19 @@ public class Card {
     // does not compare suite
     public static int compareDesc(Card card1, Card card2){
         Integer isLarger = card2.getNumber() - card1.getNumber();
-        if(isLarger != 0 && card2.getNumber() == 0){
-            isLarger = 1;
-        } else if(isLarger != 0 && card1.getNumber() == 0){
-            isLarger = -1;
-        }
 
-        if (isLarger == 0 && card2.isInHand()){
-            isLarger = 1;
-        } else if (isLarger == 0 && card1.isInHand()){
-            isLarger = -1;
+        if (isLarger != 0) {
+            if (card2.getNumber() == 0) {
+                isLarger = 1;
+            } else if (card1.getNumber() == 0) {
+                isLarger = -1;
+            }
+        } else {
+            if (!card1.isInHand() && card2.isInHand()) {
+                isLarger = 1;
+            } else if (card1.isInHand() && !card2.isInHand()) {
+                isLarger = -1;
+            }
         }
 
         return isLarger;
@@ -101,9 +107,9 @@ public class Card {
                     isLarger = 1;
                 }
             } else {
-                if (card2.isInHand()) {
+                if (!card1.isInHand() && card2.isInHand()) {
                     isLarger = -1;
-                } else if (card1.isInHand()) {
+                } else if (card1.isInHand() && !card2.isInHand()) {
                     isLarger = 1;
                 } else {
                     isLarger = card1.getSuite() - card2.getSuite();
@@ -131,9 +137,9 @@ public class Card {
                     isLarger = -1;
                 }
             } else {
-                if (card2.isInHand()) {
+                if (!card1.isInHand() && card2.isInHand()) {
                     isLarger = 1;
-                } else if (card1.isInHand()) {
+                } else if (card1.isInHand() && !card2.isInHand()) {
                     isLarger = -1;
                 } else {
                     isLarger = card1.getSuite() - card2.getSuite();
