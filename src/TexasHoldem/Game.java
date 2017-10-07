@@ -7,15 +7,16 @@ import java.util.Collections;
  * Created by Andrew on 02/10/2017.
  */
 public class Game implements SimControls {
-    private final static Integer TABLE_SIZE = 5;
-    private Integer numberOfPlayers = DEFAULT_PLAYER_COUNT;
-    private Deck deck;
-    private ArrayList<Player> players;
-    private ArrayList<Card> table;
-    private ArrayList<Player> rankedPlayers;
-    private ArrayList<Integer> winners;
+    protected final static Integer TABLE_SIZE = 5;
+    protected Integer numberOfPlayers = DEFAULT_PLAYER_COUNT;
+    protected Deck deck;
+    protected ArrayList<Player> players;
+    protected ArrayList<Card> table;
+    protected ArrayList<Player> rankedPlayers;
+    protected ArrayList<Integer> winners;
 
     public Game(){
+
     }
 
     public Game(Deck testDeck){
