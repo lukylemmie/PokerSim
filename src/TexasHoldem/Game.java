@@ -65,8 +65,14 @@ public class Game implements SimControls {
     }
 
     @Override
-    public String getPlayerHand(int player) {
-        return players.get(player).getHand().toString();
+    public ArrayList<String> getPlayerHand(int player) {
+        ArrayList<String> output = new ArrayList<>();
+
+        for (Card card : players.get(player).getHand()){
+            output.add(card.toString());
+        }
+
+        return output;
     }
 
     /*

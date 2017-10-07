@@ -4,6 +4,7 @@ import TexasHoldem.Game;
 import TexasHoldem.SimControls;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -19,12 +20,13 @@ public class SimDemo {
             sim.runGame();
             ArrayList<Integer> winners = sim.getWinners();
             for (Integer winner : winners){
-                String hand = sim.getPlayerHand(winner);
+                ArrayList<String> hand = sim.getPlayerHand(winner);
+                Collections.sort(hand);
                 Integer count = 0;
-                if (gameStats.containsKey(hand)){
-                    count = gameStats.get(hand);
+                if (gameStats.containsKey(hand.toString())){
+                    count = gameStats.get(hand.toString());
                 }
-                gameStats.put(hand, count + 1);
+                gameStats.put(hand.toString(), count + 1);
             }
         }
 

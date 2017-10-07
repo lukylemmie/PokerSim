@@ -26,7 +26,7 @@ public interface SimControls {
         returns a string of the following format
         [(string)CARD1, (string)CARD2]
      */
-    String getPlayerHand(int player);
+    ArrayList<String> getPlayerHand(int player);
 
     /*
         returns the results based on the following format
