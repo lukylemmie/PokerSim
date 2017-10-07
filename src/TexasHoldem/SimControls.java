@@ -3,7 +3,7 @@ package TexasHoldem;
 import java.util.ArrayList;
 
 /**
- * Created by Andrew on 30/09/2017.
+ * Created by Andrew on 30/09/2017. test
  */
 public interface SimControls {
     // game limits and default values
